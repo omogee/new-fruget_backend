@@ -16,9 +16,7 @@ const options = {
    // connectionLimit : 20,  
     waitForConnections : true
    }
-       
-
- const conn = mysql.createPool({
+  const options_two={
     connectionLimit : 1000,
     connectTimeout  : 60 * 60 * 1000,
     acquireTimeout  : 60 * 60 * 1000,
@@ -34,7 +32,9 @@ const options = {
     multipleStatements: true,
    // connectionLimit : 20,  
     waitForConnections : true
-})
+} 
+
+ const conn = mysql.createPool(options)
 
 console.log("connected to database successfully")
 

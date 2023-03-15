@@ -5,6 +5,7 @@ const upload = require("./multer")
 const cloudinary = require("cloudinary")
 const cloudinaries =require ("./cloudinary")
 const fs = require("fs")
+const conn = require("./conn")
 // const getDistanceFromLatLonInKm = require(`./mapdistance`)
 
 require('dotenv').config()
@@ -27,23 +28,23 @@ cloudinary.config({
    * })
    */
 
-const conn = mysql.createPool({
-    connectionLimit : 1000,
-    connectTimeout  : 60 * 60 * 1000,
-    acquireTimeout  : 60 * 60 * 1000,
-    timeout         : 60 * 60 * 1000,
+// const conn = mysql.createPool({
+//     connectionLimit : 1000,
+//     connectTimeout  : 60 * 60 * 1000,
+//     acquireTimeout  : 60 * 60 * 1000,
+//     timeout         : 60 * 60 * 1000,
 
-    host: 'localhost',
-    user: 'root',
-    //b9b001ef539d5b 
-    password: 'password',
-    //8b36306e 
-    database: 'chatapp',
-    //heroku_ea5621dea112dad 
-    multipleStatements: true,
-   // connectionLimit : 20,  
-    waitForConnections : true
-})
+//     host: 'localhost',
+//     user: 'root',
+//     //b9b001ef539d5b 
+//     password: 'password',
+//     //8b36306e 
+//     database: 'chatapp',
+//     //heroku_ea5621dea112dad 
+//     multipleStatements: true,
+//    // connectionLimit : 20,  
+//     waitForConnections : true
+// })
 
 const transporter = nodemailer.createTransport({
     service: 'gmail',
@@ -132,6 +133,7 @@ router.get(`/fetch_saveditems`, (req, res)=>{
    conn.query(`select * from savedProducts inner join product on (savedProducts.savedproduct_productId = product.productId) where savedproduct_customerId =? order by savedproduct_time desc;
   `,[indexermain], (err, savedItems)=>{
     if (err) throw err;
+    console.log("saved items",indexermain, savedItems.length)
         res.json({status:"success",savedItems:savedItems})
    })
     }else{

@@ -93,6 +93,7 @@ select subcat3  as subcat  from product  where details LIKE '%${searchinput}%'`,
 }
 })
 router.get("/", (req,res)=>{
+  console.log("i am here to fetch products")
   let sorter=""
   let setting=""
   const sort = req.query.sorter;
